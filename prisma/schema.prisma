@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model MOM_MeetingType {
+  MeetingTypeID   Int            @id @default(autoincrement())
+  MeetingTypeName String
+  Remarks         String?
+  Created         DateTime       @default(now())
+  Modified        DateTime       @updatedAt
+  MOM_Meetings    MOM_Meetings[]
+}
+
+model MOM_Staff {
+  StaffID          Int                 @id @default(autoincrement())
+  StaffName        String
+  MobileNo         String?
+  EmailAddress     String?             @unique
+  Password         String?             // Added for authentication
+  Role             String              @default("STAFF") // ADMIN, CONVENER, STAFF
+  Remarks          String?
+  Created          DateTime            @default(now())
+  Modified         DateTime            @updatedAt
+  MOM_MeetingMember MOM_MeetingMember[]
+}
+
+model MOM_Meetings {
+  MeetingID            Int                   @id @default(autoincrement())
+  MeetingTitle         String
+  MeetingDescription   String?
+  MeetingDate          DateTime
+  MeetingTime          String                // Using String to easily store HH:mm format
+  MeetingTypeID        Int
+  DocumentPath         String?
+  Remarks              String?
+  IsCancelled          Boolean               @default(false)
+  CancellationDateTime DateTime?
+  CancellationReason   String?
+  Created              DateTime              @default(now())
+  Modified             DateTime              @updatedAt
+
+  MeetingType          MOM_MeetingType       @relation(fields: [MeetingTypeID], references: [MeetingTypeID])
+  MOM_MeetingMember    MOM_MeetingMember[]
+  MOM_MeetingDocument  MOM_MeetingDocument[]
+}
+
+model MOM_MeetingMember {
+  MeetingMemberID Int       @id @default(autoincrement())
+  MeetingID       Int
+  StaffID         Int
+  IsPresent       Boolean   @default(false)
+  Remarks         String?
+  Created         DateTime  @default(now())
+  Modified        DateTime  @updatedAt
+
+  Meeting MOM_Meetings @relation(fields: [MeetingID], references: [MeetingID], onDelete: Cascade)
+  Staff   MOM_Staff    @relation(fields: [StaffID], references: [StaffID], onDelete: Cascade)
+}
+
+model MOM_MeetingDocument {
+  MeetingDocumentID Int       @id @default(autoincrement())
+  MeetingID         Int
+  DocumentName      String
+  DocumentPath      String?
+  Sequence          Int?
+  Remarks           String?
+  Created           DateTime  @default(now())
+  Modified          DateTime  @updatedAt
+
+  Meeting MOM_Meetings @relation(fields: [MeetingID], references: [MeetingID], onDelete: Cascade)
+}
