@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 
 export async function GET() {
     try {
-        const staffList = await prisma.mOM_Staff.findMany({
+        const staffList = await prisma.mOMStaff.findMany({
             select: {
                 StaffID: true,
                 StaffName: true,
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ message: 'StaffName, EmailAddress, Password are required' }, { status: 400 });
         }
 
-        const existingUser = await prisma.mOM_Staff.findUnique({
+        const existingUser = await prisma.mOMStaff.findUnique({
             where: { EmailAddress }
         });
 
@@ -43,7 +43,7 @@ export async function POST(req: Request) {
 
         const hashedPassword = await bcrypt.hash(Password, 10);
 
-        const newStaff = await prisma.mOM_Staff.create({
+        const newStaff = await prisma.mOMStaff.create({
             data: {
                 StaffName,
                 MobileNo,

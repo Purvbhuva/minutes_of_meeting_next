@@ -11,7 +11,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ message: 'Email and Password are required' }, { status: 400 });
         }
 
-        const user = await prisma.mOM_Staff.findUnique({
+        const user = await prisma.mOMStaff.findUnique({
             where: { EmailAddress }
         });
 

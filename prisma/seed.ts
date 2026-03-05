@@ -13,12 +13,12 @@ async function main() {
         await prisma.mOM_MeetingMember.deleteMany()
         await prisma.mOM_Meetings.deleteMany()
         await prisma.mOM_MeetingType.deleteMany()
-        await prisma.mOM_Staff.deleteMany()
+        await prisma.mOMStaff.deleteMany()
         
         // ==================== CREATE ADMIN USER ====================
         console.log('👤 Creating admin user...')
         const adminPassword = await bcrypt.hash('admin123', 10)
-        const admin = await prisma.mOM_Staff.create({
+        const admin = await prisma.mOMStaff.create({
             data: {
                 StaffName: 'Admin User',
                 EmailAddress: 'admin@demo.com',
@@ -33,7 +33,7 @@ async function main() {
         // ==================== CREATE CONVENER USER ====================
         console.log('👤 Creating convener user...')
         const convenerPassword = await bcrypt.hash('convener123', 10)
-        const convener = await prisma.mOM_Staff.create({
+        const convener = await prisma.mOMStaff.create({
             data: {
                 StaffName: 'John Convener',
                 EmailAddress: 'convener@demo.com',
@@ -60,7 +60,7 @@ async function main() {
         const staffMembers = []
         for (const staffData of staffUsers) {
             const hashedPassword = await bcrypt.hash('staff123', 10)
-            const staff = await prisma.mOM_Staff.create({
+            const staff = await prisma.mOMStaff.create({
                 data: {
                     StaffName: staffData.name,
                     EmailAddress: staffData.email,

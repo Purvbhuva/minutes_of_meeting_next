@@ -19,7 +19,7 @@ model MOM_MeetingType {
   MOM_Meetings    MOM_Meetings[]
 }
 
-model MOM_Staff {
+model MOMStaff {
   StaffID          Int                 @id @default(autoincrement())
   StaffName        String
   MobileNo         String?
@@ -30,6 +30,8 @@ model MOM_Staff {
   Created          DateTime            @default(now())
   Modified         DateTime            @updatedAt
   MOM_MeetingMember MOM_MeetingMember[]
+
+  @@map("MOM_Staff")
 }
 
 model MOM_Meetings {
@@ -62,7 +64,7 @@ model MOM_MeetingMember {
   Modified        DateTime  @updatedAt
 
   Meeting MOM_Meetings @relation(fields: [MeetingID], references: [MeetingID], onDelete: Cascade)
-  Staff   MOM_Staff    @relation(fields: [StaffID], references: [StaffID], onDelete: Cascade)
+  Staff   MOMStaff    @relation(fields: [StaffID], references: [StaffID], onDelete: Cascade)
 }
 
 model MOM_MeetingDocument {

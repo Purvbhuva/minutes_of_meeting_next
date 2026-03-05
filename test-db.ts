@@ -6,7 +6,7 @@ async function testDb() {
     try {
         console.log('Testing database connection...');
         
-        const user = await prisma.mOM_Staff.findUnique({
+        const user = await prisma.mOMStaff.findUnique({
             where: { EmailAddress: 'admin@demo.com' }
         });
         
@@ -20,7 +20,7 @@ async function testDb() {
             console.log('❌ User NOT found!');
         }
         
-        const allUsers = await prisma.mOM_Staff.count();
+        const allUsers = await prisma.mOMStaff.count();
         console.log('Total users in database:', allUsers);
         
     } catch (error) {

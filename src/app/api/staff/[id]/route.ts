@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
         const { id } = await params;
-        const staff = await prisma.mOM_Staff.findUnique({
+        const staff = await prisma.mOMStaff.findUnique({
             where: { StaffID: Number(id) },
             select: {
                 StaffID: true,
@@ -42,7 +42,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
             dataToUpdate.Password = await bcrypt.hash(Password, 10);
         }
 
-        const updatedStaff = await prisma.mOM_Staff.update({
+        const updatedStaff = await prisma.mOMStaff.update({
             where: { StaffID: Number(id) },
             data: dataToUpdate,
             select: {
@@ -63,7 +63,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
 export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
         const { id } = await params;
-        await prisma.mOM_Staff.delete({
+        await prisma.mOMStaff.delete({
             where: { StaffID: Number(id) }
         });
 

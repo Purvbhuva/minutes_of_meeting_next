@@ -12,6 +12,9 @@
     "seed": "npx tsx prisma/seed.ts",
     "db:setup": "npm run prisma:generate && npm run seed"
   },
+  "prisma": {
+    "seed": "npx tsx prisma/seed.ts"
+  },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^5.22.0",

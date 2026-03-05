@@ -7,7 +7,7 @@ export async function GET() {
         const activeMeetings = await prisma.mOM_Meetings.count({ where: { IsCancelled: false } });
         const cancelledMeetings = await prisma.mOM_Meetings.count({ where: { IsCancelled: true } });
 
-        const totalStaff = await prisma.mOM_Staff.count();
+        const totalStaff = await prisma.mOMStaff.count();
         const totalDocuments = await prisma.mOM_MeetingDocument.count();
 
         const upcomingMeetings = await prisma.mOM_Meetings.findMany({

@@ -18,7 +18,7 @@ export async function GET(req: Request) {
             return NextResponse.json({ message: 'Invalid token' }, { status: 401 });
         }
 
-        const user = await prisma.mOM_Staff.findUnique({
+        const user = await prisma.mOMStaff.findUnique({
             where: { StaffID: payload.id as number },
             select: {
                 StaffID: true,
